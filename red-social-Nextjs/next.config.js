@@ -9,6 +9,12 @@ const nextConfig = {
             hostname: 'vignette.wikia.nocookie.net',
             port: '',
             pathname: '/**'
+        },
+        {
+            protocol: 'https',
+            hostname: 'i.pinimg.com',
+            port: '',
+            pathname: '/**'
         }]
     }
 }

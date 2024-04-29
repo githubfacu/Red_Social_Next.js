@@ -1,39 +1,16 @@
-import Message from "@/components/messages/Message"
 import UserTabs from "@/components/users/UserTabs"
 import Image from "next/image"
 import Link from "next/link"
-import profilePic from '../../../../../public/rocky_raccoon.jpg'
+import { getUserData, getUserMessageReplies, getUserMessages } from "@/services/api.service"
 
-const UserPage = ({params}: {params: {username: String}}) => {
 
-  const user = {
-    username: params.username,
-    name: 'Rocky Raccoon',
-    bio: `Now somewhere in the Black Mountain Hills of Dakota \nThere lived a young boy named Rocky Raccoon \nAnd one day his woman ran off with another guy \nHit young Rocky in the eye \n \nRocky didn't like that \nHe said, "I'm gonna get that boy" \n So one day he walked into town \n Booked himself a room in the local saloon`,
-    followersCount: 15,
-    followingCount: 3,
-    messages: [
-      {
-        user: 'Rocky Raccoon',
-        username: 'RockyRaccoon',
-        message: `"Danny boy, this is a showdown"`,
-        repliesCount: 13
-      },
-      {
-        user: 'Doctor',
-        username: 'Doc',
-        message: `"Rocky, you met your match"`,
-        repliesCount: 16
-      }
-    ],
-    replies: [
-      {
-        message: `"Doc, it's only a scratch. And I'll be better, I'll be better, Doc, as soon as I am able"`,
-        repliesCount: 0
-      }
-    ]
-  }
+const UserPage = async ({params}: {params: {username: string}}) => {
 
+  const userPromise = getUserData(params.username)
+  const userMessagesPromise = getUserMessages(params.username)
+  const userMessageRepliesPromise = getUserMessageReplies(params.username)
+
+  const [user, userMessages, userMessageReplies] = await Promise.all([userPromise, userMessagesPromise, userMessageRepliesPromise])
 
   return (
     <main className="flex flex-col bg-gray-200 p-8">
@@ -42,11 +19,10 @@ const UserPage = ({params}: {params: {username: String}}) => {
         <div className="rounded-full text-center mb-4 block relative w-20 h-20">
           <Image
             className="rounded-full"
-            src={profilePic}
+            src={user.photoUrl}
             alt="Claudia"
             fill
             priority
-            placeholder="blur"
           />
         </div>
         <h2 className="mb-1">
@@ -65,7 +41,7 @@ const UserPage = ({params}: {params: {username: String}}) => {
         </div>
     </section>
 
-    <UserTabs messages={user.messages} replies={[]}/>
+    <UserTabs messages={userMessages.content} replies={userMessageReplies.content}/>
 
     </main>
   )
