@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+  body{
+    @apply font-body
+  }
+
+  h1, h2, h3{
+    @apply font-title
+  }
+
+  h2{
+    @apply font-semibold;
+    @apply text-lg; 
+  }
+  
+  h3{
+    @apply font-semibold;
+    @apply text-base;
+  }
+
+  .button-primary{
+    @apply rounded-md;
+    @apply bg-blue-500;
+    @apply text-white;
+    @apply px-4;
+    @apply py-2;
+  }
+
+  .button-primary:hover{
+    @apply bg-blue-600;
+  }
+
+  .link-primary{
+    @apply cursor-pointer;
+    @apply text-blue-500;
+    @apply font-semibold;
+  }
+
+  .link-primary:hover{
+    @apply text-blue-600;
+  }
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
