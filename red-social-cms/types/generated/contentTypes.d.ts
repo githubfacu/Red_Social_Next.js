@@ -397,6 +397,12 @@ export interface ApiFaqPageFaqPage extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    ButtonPrimary: Attribute.Component<'buttons.button'> &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

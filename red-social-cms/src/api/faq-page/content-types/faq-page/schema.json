@@ -39,6 +39,17 @@
         }
       },
       "type": "string"
+    },
+    "ButtonPrimary": {
+      "displayName": "Button",
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "buttons.button"
     }
   }
 }
