@@ -1,19 +1,24 @@
 import Image from 'next/image'
 import styles from './page.module.css'
 import Link from 'next/link'
-import FAQCard from '@/components/faq/FAQCard'
 import FAQSection from '@/components/faq/FAQSection'
+import faqsApi from '@/services/faqs/faqs.service'
 
-export default function FAQPage() {
 
+export default async function FAQPage({params}: {params: {slug: string}}) {
+  const faqPages = await faqsApi.getFAQPages()
+  const faqPage = faqPages.data.find(page => page.attributes.slug === `/${params.slug}`)
+  
+  
   return (
     <>
         <main>
-            <FAQSection />
+            <FAQSection sections={faqPages.data} />
 
             <section className='flex flex-col'>
-                <h2>Seccion 1</h2>
-            </section>            
+                <h2>{faqPage?.attributes.title}</h2>
+                
+            </section>
         </main>
 
     </>

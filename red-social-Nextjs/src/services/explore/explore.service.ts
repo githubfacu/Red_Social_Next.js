@@ -7,7 +7,7 @@ import { TrendingHashtag } from "@/types/hash.types"
 
 class ExploreAPI {
 
-    getTrendingHashtags = async (page: number, size: number): Promise<TrendingHashtag> =>
+    getTrendingHashtags = async (page: number, size: number): Promise<PageType<TrendingUserType>> =>
         httpGetPublic(`/explore/trending`, new URLSearchParams({page: `${page}`, size: `${size}`}))
     getFollowRecommendations = async (page: number, size: number): Promise<PageType<TrendingUserType>> =>
         httpGetPublic(`/explore/follow-recommendations`, new URLSearchParams({page: `${page}`, size: `${size}`}))

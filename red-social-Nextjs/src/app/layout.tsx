@@ -3,7 +3,7 @@ import { Mulish } from 'next/font/google'
 import { Lexend } from 'next/font/google'
 
 import './globals.css'
-import Link from 'next/link'
+import Navbar from '@/components/layout/Navbar'
 
 const mulish = Mulish({ 
   subsets: ['latin'],
@@ -29,14 +29,7 @@ export default function RootLayout({
     <html lang="en">
 
       <body className={`${mulish.variable} ${lexend.variable}`}>
-        <header>
-          <nav>
-            <div>
-              <Link href='/explore'>LOGO</Link>
-            </div>          
-          </nav>
-        </header>
-
+        <Navbar />
         {children}
       </body>
 

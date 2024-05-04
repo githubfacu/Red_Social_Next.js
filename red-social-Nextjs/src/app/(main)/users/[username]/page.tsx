@@ -20,7 +20,7 @@ const UserPage = async ({params}: {params: {username: string}}) => {
           <Image
             className="rounded-full"
             src={user.photoUrl}
-            alt="Claudia"
+            alt="imagen-perfil"
             fill
             priority
           />
