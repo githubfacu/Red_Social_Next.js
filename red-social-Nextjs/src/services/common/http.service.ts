@@ -6,7 +6,25 @@ const API_PUBLIC_ENDPOINT = `/public`
 
 export const httpGet = async <T>(endpoint: string, params? : URLSearchParams): Promise<T> => {
 
-    const res = await fetch(`${API_URL}${endpoint}${params ? `?${params}` : ''}`)
+    const res = await fetch(`${API_URL}${endpoint}${params ? `?${params}` : ''}`,{
+        cache: 'no-cache'
+    })
+    if (!res.ok) {
+        throw new Error ('Error en la solicitud: ' + endpoint)
+    }
+    return res.json()
+}
+
+export const httpPost = async <T>(endpoint: string, body: object): Promise<T> => {
+
+    const res = await fetch(`${API_URL}${endpoint}`,{
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJzb2NpYWwtYXBpIiwiaWF0IjoxNjkxNTEzNzMxLCJ1c2VybmFtZSI6InNvbG8ifQ.hKQgfrMv4xbj8LZkrDKqoZiGYNtC6UL_xPoHkoKPCdI'
+        }
+    })
     if (!res.ok) {
         throw new Error ('Error en la solicitud: ' + endpoint)
     }

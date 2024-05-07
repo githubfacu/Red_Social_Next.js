@@ -14,7 +14,9 @@
     "autoprefixer": "^10.4.16",
     "next": "14.0.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.51.4",
+    "react-infinite-scroll-component": "^6.1.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.5",

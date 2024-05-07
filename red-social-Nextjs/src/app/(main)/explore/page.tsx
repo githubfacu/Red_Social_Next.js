@@ -2,7 +2,6 @@ import ExploreTabs from "@/components/explore/ExploreTabs"
 import exploreApi from "@/services/explore/explore.service"
 
 
-
 const ExplorePage = async ({searchParams}: {searchParams? : {[key: string]: string | undefined}}) => {
 
   const hashesPromise = exploreApi.getTrendingHashtags(0, 20)
@@ -13,8 +12,8 @@ const ExplorePage = async ({searchParams}: {searchParams? : {[key: string]: stri
   return (
     <div className="flex flex-col bg-gray-100 p-8">
       <section className="flex flex-col mb-8">
-        <ExploreTabs hashtags={hashes.content}
-          users={users.content} 
+        <ExploreTabs hashtags={hashes}
+          users={users} 
           initialTab={searchParams?.type}
         />
       </section>

@@ -16,6 +16,13 @@ const nextConfig = {
             port: '',
             pathname: '/**'
         }]
+    },
+    async redirects(){
+        return [{
+            source: '/messages',
+            destination: '/',
+            permanent: true
+        }]
     }
 }
 
