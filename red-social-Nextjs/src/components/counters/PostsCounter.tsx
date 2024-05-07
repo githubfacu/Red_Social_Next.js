@@ -1,11 +1,11 @@
 
-type PostCounter = {
+type PostCounterProps = {
     count: number
 }
 
-const PostsCounter = ({count}: PostCounter) => {
+const PostsCounter = ({count}: PostCounterProps) => {
 
-    const label = count > 1 ? 'Posteos' : 'Posteo'
+    const label = count === 1 ? 'Posteo' : 'Posteos'
 
   return (
     <div>
