@@ -1,16 +1,18 @@
-import MessagePostForm from "@/components/messages/MessagePostForm"
-import MessageFeed from "@/components/messages/MessagesFeed"
 import messagesApi from "@/services/messages/messages.service"
+import IndexPageContainer from "./page.container"
 
-const IndexPage = async () => {
 
-    const messagesResponse = await messagesApi.getMessagesFeed(0, 10)
+const IndexPage = async ({searchParams}: {searchParams? : {[key: string]: string | undefined}}) => {
+  
+    const messagesResponse = searchParams?.query ?
+      await messagesApi.getMessagesByHash(searchParams?.query, 0, 10) :
+      await messagesApi.getMessagesFeed(0, 10)
+
 
     return (
       <main className="flex flex-col bg-gray-200 p-8">
         <section  className="flex flex-col mb-8">
-          <MessagePostForm />
-          <MessageFeed initialMessages={messagesResponse}/>
+          <IndexPageContainer messagesResponse={messagesResponse} initialQuery={searchParams?.query}/>
         </section>
       </main>
     )

@@ -21,7 +21,7 @@ type ExploreTabsProps = {
 }
 
 const ExploreTabs = ({hashtags, users, initialTab} : ExploreTabsProps) => {
-
+  
   const searchParams = useSearchParams()
   const [tab, setTab] = useState<TabView>(initialTab ? TabView[initialTab as keyof typeof TabView] : TabView.HASHTAGS)
 

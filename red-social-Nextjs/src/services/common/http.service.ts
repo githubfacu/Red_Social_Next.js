@@ -22,7 +22,7 @@ export const httpPost = async <T>(endpoint: string, body: object): Promise<T> =>
         body: JSON.stringify(body),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJzb2NpYWwtYXBpIiwiaWF0IjoxNjkxNTEzNzMxLCJ1c2VybmFtZSI6InNvbG8ifQ.hKQgfrMv4xbj8LZkrDKqoZiGYNtC6UL_xPoHkoKPCdI'
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJzb2NpYWwtYXBpIiwiaWF0IjoxNjkxNTE2MTY0LCJ1c2VybmFtZSI6Ik9iaVdhbiJ9.69rRMYfcoNj4BEarf4ZGD0T5Byx9b-zkTCGoeBWuKCg'
         }
     })
     if (!res.ok) {

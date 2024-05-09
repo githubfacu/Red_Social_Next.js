@@ -6,7 +6,13 @@ type RepliesCounterProps = {
 
 const RepliesCounter = ({count, onClick}: RepliesCounterProps) => {
 
-    const label = count === 1 ? 'Respuesta' : 'Respuestas'
+  if (!count || count == 0) {
+    return <div className="link-primary" onClick={onClick}>
+        Se quién responda primero
+    </div>
+  }
+
+    const label = count > 1 ? 'Respuestas' : 'Respuesta'
 
   return (
     <div className="link-primary" onClick={onClick}>

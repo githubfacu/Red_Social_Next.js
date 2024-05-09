@@ -1,6 +1,5 @@
 'use client'
-import messagesApi from "@/services/messages/messages.service"
-import { data } from "autoprefixer"
+import useMessages from "@/contexts/MessageContent"
 import Image from "next/image"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
@@ -14,15 +13,15 @@ type FormData = {
 }
 
 const MessagePostForm = ({parentId}: MessagePostFormProps) => {
-
+    const {postMessages} = useMessages()
     const {register, handleSubmit, resetField, setFocus} = useForm<FormData>()
 
     useEffect(() => {
         setFocus('message')
-    }, [])
+    }, [setFocus])
 
     const onSubmit = async (data: FormData) => {
-        const response = await messagesApi.postMessages(data.message, parentId)
+        await postMessages(data.message, parentId)
         resetField('message')
         setFocus('message')
     }
@@ -53,7 +52,7 @@ const MessagePostForm = ({parentId}: MessagePostFormProps) => {
                 />
 
                 <div className="flex justify-end">
-                    <button className="button-primary uppercase font-semibold w-fit">Postear</button>
+                    <button type="submit" className="button-primary font-semibold w-fit">POSTEAR</button>
                 </div>                
             </form>
 

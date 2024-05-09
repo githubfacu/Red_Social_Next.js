@@ -10,8 +10,10 @@ class MessageAPI {
     getMessage = async (id: string): Promise<MessageType> => httpGetPublic(`/messages/${id}`)
     getMessagesReplies = async (id: string, page: number, size: number): Promise<PageType<MessageType>> =>
         httpGetPublic(`/messages/${id}/replies`,  new URLSearchParams({page: `${page}`, size: `${size}`}))
-    postMessages = async (message: string, parentId: string): Promise<MessageType> =>
+    postMessages = async (message: string, parentId?: string): Promise<MessageType> =>
         httpPost(`/messages`, {message: message, parentId: parentId ?? null})
+    getMessagesByHash = async (hashtag: string ,page: number, size: number): Promise<PageType<MessageType>> =>
+        httpGetPublic(`/messages/hash/${hashtag}`,  new URLSearchParams({page: `${page}`, size: `${size}`}))
 }
 
 const messagesApi = new MessageAPI()
