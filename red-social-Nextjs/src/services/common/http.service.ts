@@ -14,7 +14,7 @@ export class HttpBaseAPI {
 
 
     async httpGet<T>(endpointSufijo: string, params?: URLSearchParams, accessToken?: string): Promise<T>{
-
+        
         const res = await fetch(`${this.privateEndpoint}${endpointSufijo}${params ? `?${params}` : ''}`,{
             cache: 'no-cache',
             headers: !accessToken ? {'Content-Type': 'application/json'} : {

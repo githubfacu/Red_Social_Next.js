@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import SubmitButton from "../form/SubmitButton";
 import InputText from "../form/InputText";
-import authApi from "@/services/auth/auth.service";
+import authApi from "@/services/auth/auth.api";
 import { useState } from "react";
 import { AccesoDenegado } from "@/services/common/http.errors";
 import { useRouter } from "next/navigation";
