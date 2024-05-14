@@ -2,11 +2,15 @@ export type FAQPageType = {
     id: number
     attributes: {
         title: string
-        body: {
-            children: {
-                text: string
-            }
-        }
+        body: [{
+            type: string
+            children: [
+                {
+                    type: string
+                    text: string
+                }
+            ]
+        }]
         slug: string        
     }
 }

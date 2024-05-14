@@ -4,6 +4,10 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import SubmitButton from "../form/SubmitButton";
 import InputText from "../form/InputText";
+import authApi from "@/services/auth/auth.service";
+import { useState } from "react";
+import { AccesoDenegado } from "@/services/common/http.errors";
+import { useRouter } from "next/navigation";
 
 type FormData = {
     username: string;
@@ -13,19 +17,35 @@ type FormData = {
 const schema = yup.object({
     username: yup.string().required(),
     password: yup.string().required(),
-  })
-  .required()
+}).required()
 
 const LoginForm = () => {
 
+    const router = useRouter()
+    const [serverError, setServerError] = useState<string | null>(null)
     const methods = useForm<FormData>({
         resolver: yupResolver(schema)
     })
 
     const {handleSubmit} = methods
 
-    const onSubmit = (data: FormData) => {
-        console.log(JSON.stringify(data));
+    const onSubmit = async (data: FormData) => {
+      setServerError(null)
+      try{
+        const loginResponse = await authApi.login(data.username, data.password)
+        console.log(JSON.stringify(loginResponse));
+        router.push('/')
+      }
+      catch(e){
+        if(e instanceof AccesoDenegado){
+          setServerError('Las credenciales no son válidas')
+        }
+        else{
+          setServerError('Ha ocurrido un error, intente más tarde')
+        }
+      }
+
+        return false
     }
 
   return (
@@ -45,6 +65,11 @@ const LoginForm = () => {
           />
 
           <SubmitButton label={"Iniciar sesión"} onSubmit={onSubmit} styles="mt-4"/>
+
+          {
+            serverError && 
+            <p className="text-red-600 mt-4">{serverError}</p>
+          }
         </form>
       </FormProvider>
     </>

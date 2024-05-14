@@ -1,6 +1,3 @@
-import Image from 'next/image'
-import styles from './page.module.css'
-import Link from 'next/link'
 import FAQSection from '@/components/faq/FAQSection'
 import faqsApi from '@/services/faqs/faqs.service'
 
@@ -17,7 +14,7 @@ export default async function FAQPage({params}: {params: {slug: string}}) {
 
             <section className='flex flex-col'>
                 <h2>{faqPage?.attributes.title}</h2>
-                
+                <p>{faqPage?.attributes.body[0].children[0].text}</p>
             </section>
         </main>
 

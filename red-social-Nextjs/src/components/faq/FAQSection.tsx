@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import FAQCard from './FAQCard'
 import { FAQPageType } from '@/types/faq.types'
 
@@ -17,7 +16,9 @@ const FAQSection = ({sections} : FAQSectionProps) => {
 
           {sections.map(section => 
             <FAQCard key={section.attributes.slug}
-             label={section.attributes.title} href={`/faq${section.attributes.slug}`}/>
+            label={section.attributes.title}
+            href={`/faq${section.attributes.slug}`}
+            body={section.attributes.body}/>
           )}
 
         </div>

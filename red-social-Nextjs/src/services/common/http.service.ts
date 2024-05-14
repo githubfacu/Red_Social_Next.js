@@ -1,38 +1,68 @@
 import { URLSearchParams } from "url"
-
-const API_URL = 'http://localhost:8080/api'
-const API_PUBLIC_ENDPOINT = `/public`
+import { AccesoDenegado } from "./http.errors"
 
 
-export const httpGet = async <T>(endpoint: string, params? : URLSearchParams): Promise<T> => {
+export class HttpBaseAPI {
 
-    const res = await fetch(`${API_URL}${endpoint}${params ? `?${params}` : ''}`,{
-        cache: 'no-cache'
-    })
-    if (!res.ok) {
-        throw new Error ('Error en la solicitud: ' + endpoint)
+    protected privateEndpoint: string
+    protected publicEndpointSufijo: string
+
+    constructor(privateEndpoint: string, publicEndpointSufijo: string){
+        this.privateEndpoint = privateEndpoint
+        this.publicEndpointSufijo = publicEndpointSufijo
     }
-    return res.json()
-}
 
-export const httpPost = async <T>(endpoint: string, body: object): Promise<T> => {
 
-    const res = await fetch(`${API_URL}${endpoint}`,{
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJzb2NpYWwtYXBpIiwiaWF0IjoxNjkxNTE2MTY0LCJ1c2VybmFtZSI6Ik9iaVdhbiJ9.69rRMYfcoNj4BEarf4ZGD0T5Byx9b-zkTCGoeBWuKCg'
+    async httpGet<T>(endpointSufijo: string, params?: URLSearchParams, accessToken?: string): Promise<T>{
+
+        const res = await fetch(`${this.privateEndpoint}${endpointSufijo}${params ? `?${params}` : ''}`,{
+            cache: 'no-cache',
+            headers: !accessToken ? {'Content-Type': 'application/json'} : {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            }
+        })
+        if (!res.ok) {
+            throw new Error ('Error en la solicitud: ' + endpointSufijo)
         }
-    })
-    if (!res.ok) {
-        throw new Error ('Error en la solicitud: ' + endpoint)
+        return res.json()
     }
-    return res.json()
+
+    async httpGetPublic<T>(endpointSufijo: string, params? : URLSearchParams): Promise<T>{
+        return this.httpGet(`${this.publicEndpointSufijo}${endpointSufijo}`, params)
+    }
+
+
+    async httpPost<T>(endpointSufijo: string, body: object, accessToken?: string): Promise<T>{
+
+        const res = await fetch(`${this.privateEndpoint}${endpointSufijo}`,{
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: !accessToken ? {'Content-Type': 'application/json'} : {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            }
+        })
+        if (!res.ok) {
+            if (res.status === 403) {
+                throw new AccesoDenegado('Acceso denegado')
+            }
+            throw new Error ('Error en la solicitud: ' + endpointSufijo)
+        }
+        return res.json()
+    }
+
+    async httpPostPublic<T>(endpointSufijo: string, body: object): Promise<T>{
+        return this.httpPost(`${this.publicEndpointSufijo}${endpointSufijo}`, body)
+    }
 }
 
-export const httpGetPublic = async <T>(endpoint: string, params? : URLSearchParams): Promise<T> => {
 
-    return httpGet(`${API_PUBLIC_ENDPOINT}${endpoint}`, params)
-}
+
+
+
+
+
+
+
 
