@@ -1,6 +1,6 @@
 import { RedisClientType, createClient } from 'redis';
 import { AccesoDenegado } from '../common/http.errors';
-import { AuthResponseType } from '@/types/auth.types';
+import { AuthResponseType, LoginResponseType } from '@/types/auth.types';
 import { v4 as uuidv4 } from 'uuid';
 import authApi from './auth.api';
 
@@ -26,9 +26,19 @@ class AuthService {
     async autenticacion(username: string, password: string): Promise<AuthResponseType>{
 
         const loginResponse = await authApi.loginInternal(username, password)
+        return this.buildAuthResponse(loginResponse)
+    }
+
+    async register(username: string, password: string, name: string, photoUrl: string): Promise<AuthResponseType>{
+
+        const loginResponse = await authApi.registerInternal(username, password, name, photoUrl)
+        return this.buildAuthResponse(loginResponse)
+    }
+
+    buildAuthResponse(loginResponse: LoginResponseType): AuthResponseType{
         const sessionId = uuidv4()
         const now = new Date()
-        const expiracion = new Date(now.getTime() + TEN_MINUTE * 1000).toUTCString()
+        const expiracion = new Date(now.getTime() + TEN_MINUTE * 1000).getTime()
     
         this.client.set(sessionId, loginResponse.accessToken, {EX: TEN_MINUTE})
     
@@ -38,6 +48,7 @@ class AuthService {
             user: loginResponse.user
         }
     }
+
 
     async getAccessToken(sessionId?: string): Promise<string>{
         if (!sessionId) {
@@ -52,6 +63,10 @@ class AuthService {
 
     async getRedisValue(key: string): Promise<string | null>{
         return await this.client.get(key)
+    }
+
+    async logout (sessionId: string): Promise<void>{
+        await this.client.del(sessionId)
     }
 }
 

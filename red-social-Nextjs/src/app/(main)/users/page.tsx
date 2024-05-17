@@ -1,6 +1,6 @@
 const UsersPage = () => {
   return (
-    <div>Usuarios</div>
+    <></>
   )
 }
 

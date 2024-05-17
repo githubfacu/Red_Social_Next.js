@@ -7,7 +7,7 @@ export type LoginResponseType = {
 
 export type AuthResponseType = {
     sessionId: string
-    expiracion: string
+    expiracion: number
     user: UserType
 }
 

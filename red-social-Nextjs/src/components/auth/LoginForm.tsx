@@ -1,30 +1,25 @@
 'use client'
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
 import SubmitButton from "../form/SubmitButton";
 import InputText from "../form/InputText";
 import authApi from "@/services/auth/auth.api";
 import { useState } from "react";
 import { AccesoDenegado } from "@/services/common/http.errors";
 import { useRouter } from "next/navigation";
+import LoginSchema from "@/schemes/login.scheme";
 
 type FormData = {
     username: string;
     password: string;
 }
 
-const schema = yup.object({
-    username: yup.string().required(),
-    password: yup.string().required(),
-}).required()
-
 const LoginForm = () => {
 
     const router = useRouter()
     const [serverError, setServerError] = useState<string | null>(null)
     const methods = useForm<FormData>({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(LoginSchema)
     })
 
     const {handleSubmit} = methods
@@ -35,6 +30,7 @@ const LoginForm = () => {
         const loginResponse = await authApi.login(data.username, data.password)
         console.log(JSON.stringify(loginResponse));
         router.push('/')
+        router.refresh()
       }
       catch(e){
         if(e instanceof AccesoDenegado){

@@ -1,24 +1,33 @@
 import { AccesoDenegado } from '@/services/common/http.errors'
-import * as yup from "yup"
 import authService from '@/services/auth/auth.service';
+import LoginSchema from '@/schemes/login.scheme';
+import { cookies } from 'next/headers';
 
-const schema = yup.object({
-    username: yup.string().required(),
-    password: yup.string().required(),
-}).required()
 
 export async function POST(request: Request) {
 
-    const {username, password} = await schema.validate(await request.json())
+    const {username, password} = await LoginSchema.validate(await request.json())
 
     try{
         const loginResponse = await authService.autenticacion(username, password)
 
-        const authCookie = `SocialSessionID=${loginResponse.sessionId}; Expires=${loginResponse.expiracion}; Domain=localhost; HttpOnly; Path=/`
-
+        cookies().set('SocialSessionID', loginResponse.sessionId, {
+            expires: loginResponse.expiracion,
+            httpOnly: true,
+            secure: true,
+            domain: 'localhost',
+            path: '/'
+        })
+        cookies().set('SocialUsername', loginResponse.user.username, {
+            expires: loginResponse.expiracion,
+            httpOnly: false,
+            secure: true,
+            domain: 'localhost',
+            path: '/'
+        })
+        
         return new Response(JSON.stringify(loginResponse.user) , {
-            status: 200,
-            headers: { 'Set-Cookie': authCookie },
+            status: 200
         })
 
     } catch (e){

@@ -12,8 +12,11 @@ const UserPageAsyncContainer = async ({username} : UserPageContainerProps) => {
     const userPromise = userApi.getUserData(username)
     const userMessagesPromise = userApi.getUserMessages(username)
     const userMessageRepliesPromise = userApi.getUserMessageReplies(username)
+    const userFollowersPromise = userApi.getUserFollowers(username)
+    const userFollowingPromise = userApi.getUserFollowing(username)
+
   
-    const [user, userMessages, userMessageReplies] = await Promise.all([userPromise, userMessagesPromise, userMessageRepliesPromise])
+    const [user, userMessages, userMessageReplies, userFollowing, userFollowers] = await Promise.all([userPromise, userMessagesPromise, userMessageRepliesPromise, userFollowersPromise, userFollowingPromise])
   
     return (
       <main className="flex flex-col bg-gray-200 p-8">
@@ -44,7 +47,7 @@ const UserPageAsyncContainer = async ({username} : UserPageContainerProps) => {
             </div>
         </section>
   
-        <UserTabs messages={userMessages.content} replies={userMessageReplies.content}/>
+        <UserTabs messages={userMessages.content} replies={userMessageReplies.content} followers={userFollowers.content} following={userFollowing.content}/>
   
       </main>
     )

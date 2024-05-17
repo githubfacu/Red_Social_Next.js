@@ -15,11 +15,21 @@ const nextConfig = {
             hostname: 'i.pinimg.com',
             port: '',
             pathname: '/**'
+        },
+        {
+            protocol: 'https',
+            hostname: 'i1.sndcdn.com',
+            port: '',
+            pathname: '/**'
         }]
     },
     async redirects(){
         return [{
             source: '/messages',
+            destination: '/',
+            permanent: true
+        },{
+            source: '/users',
             destination: '/',
             permanent: true
         }]

@@ -4,6 +4,7 @@ import { Lexend } from 'next/font/google'
 
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
+import { cookies } from 'next/headers'
 
 const mulish = Mulish({ 
   subsets: ['latin'],
@@ -25,11 +26,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
+  const loggedUsername = cookies().get('SocialUsername')
+
   return (
     <html lang="en">
 
       <body className={`${mulish.variable} ${lexend.variable}`}>
-        <Navbar />
+        <Navbar loggedUsername={loggedUsername?.value}/>
         {children}
       </body>
 

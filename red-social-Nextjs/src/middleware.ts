@@ -19,7 +19,12 @@ export async function middleware(request: NextRequest) {
     return getHeadersAuthentication(request, accessToken);
   } 
   catch (e){
-      return NextResponse.redirect(new URL('/login', request.url))
+    if (e instanceof AccesoDenegado) {
+      if (!request.url.endsWith('/profile')) {
+        return NextResponse.next()
+      }
+    }
+    return NextResponse.redirect(new URL('/login', request.url))
   }
 }
 
@@ -43,5 +48,5 @@ const getHeadersAuthentication = (request: NextRequest, accessToken: string) => 
 
 
 export const config = {
-  matcher: '/profile',
+  matcher: ['/','/messages/:path*','/profile','/api/proxy/:path*']
 }

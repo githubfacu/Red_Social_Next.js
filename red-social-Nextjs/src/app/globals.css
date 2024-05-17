@@ -50,6 +50,19 @@
     @apply bg-blue-600;
   }
 
+  .button-secondary{
+    @apply rounded-md;
+    @apply bg-gray-50;
+    @apply text-blue-600;
+    @apply px-4;
+    @apply py-2;
+  }
+
+  .button-secondary:hover{
+    @apply bg-gray-200;
+  }
+
+
   .link-primary{
     @apply cursor-pointer;
     @apply text-blue-500;

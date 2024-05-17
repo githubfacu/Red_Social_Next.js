@@ -12,7 +12,6 @@ type SearchBarProps = {
 }
 
 const SearchBar = ({initialQuery}: SearchBarProps) => {
-    console.log(initialQuery);
     
     const router = useRouter()
     const {register, handleSubmit, setValue} = useForm<FormData>({
@@ -36,7 +35,7 @@ const SearchBar = ({initialQuery}: SearchBarProps) => {
             <input
                 {...register('query')}
                 type='text'
-                placeholder={'buscar'}
+                placeholder={'buscar por hash...'}
                 className="flex-grow mr-4 px-3 py-2 rounded bg-gray-50 border border-gray-200"
             />
             <button type="submit" className="button-primary">BUSCAR</button>

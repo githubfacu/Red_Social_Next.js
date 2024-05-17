@@ -1,9 +1,13 @@
 'use client'
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
 import SubmitButton from "../form/SubmitButton";
 import InputText from "../form/InputText";
+import RegisterSchema from "@/schemes/register.scheme";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import authApi from "@/services/auth/auth.api";
+import { ConflictError } from "@/services/common/http.errors";
 
 type FormData = {
     username: string;
@@ -12,25 +16,35 @@ type FormData = {
     photoUrl: string;
 }
 
-const schema = yup.object({
-    username: yup.string().required(),
-    password: yup.string().required(),
-    name: yup.string().required(),
-    photoUrl: yup.string().required(),
-  })
-  .required()
-
 const RegisterForm = () => {
 
-    const methods = useForm<FormData>({
-        resolver: yupResolver(schema)
-    })
+  const router = useRouter()
+  const [serverError, setServerError] = useState<string | null>(null)
+  const methods = useForm<FormData>({
+    resolver: yupResolver(RegisterSchema)
+  })
 
-    const {handleSubmit} = methods
+  const {handleSubmit} = methods
 
-    const onSubmit = (data: FormData) => {
-        console.log(JSON.stringify(data));
+  const onSubmit = async (data: FormData) => {
+    setServerError(null)
+    try{
+      const loginResponse = await authApi.register(data.username, data.password, data.name, data.photoUrl)
+      console.log(JSON.stringify(loginResponse));
+      router.push('/')
+      router.refresh()
     }
+    catch(e){
+      if(e instanceof ConflictError){
+        setServerError('El usuario: '+ data.username +' ya existe')
+      }
+      else{
+        setServerError('Ha ocurrido un error, intente más tarde')
+      }
+    }
+
+      return false
+  }
 
   return (
     <>
@@ -59,7 +73,10 @@ const RegisterForm = () => {
           />
 
           <SubmitButton label={"Crear cuenta"} onSubmit={onSubmit} styles="mt-4"/>
-
+          {
+            serverError && 
+            <p className="text-red-600 mt-4">{serverError}</p>
+          }
         </form>
       </FormProvider>
     </>
