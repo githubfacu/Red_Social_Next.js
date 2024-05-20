@@ -12,31 +12,37 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Titulo": {
+    "title": {
       "type": "string"
     },
-    "Imagenes": {
+    "images": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "allowedTypes": [
         "images",
         "videos"
       ]
     },
-    "Descripcion": {
+    "description": {
       "type": "text"
     },
-    "Precio": {
-      "type": "decimal"
+    "price": {
+      "type": "float"
     },
-    "HayStock": {
+    "isStock": {
       "type": "boolean"
     },
-    "Slug": {
+    "slug": {
       "type": "string"
     },
-    "Stock": {
+    "stock": {
+      "type": "integer"
+    },
+    "offer": {
+      "type": "boolean"
+    },
+    "discountRate": {
       "type": "integer"
     }
   }

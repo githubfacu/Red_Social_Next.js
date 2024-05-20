@@ -34,7 +34,9 @@ export default function RootLayout({
 
       <body className={`${mulish.variable} ${lexend.variable}`}>
         <Navbar loggedUsername={loggedUsername?.value}/>
-        {children}
+        <div className=' mt-14'>
+          {children}          
+        </div>
       </body>
 
     </html>

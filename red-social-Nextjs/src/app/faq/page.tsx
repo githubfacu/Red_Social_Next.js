@@ -1,5 +1,6 @@
-import FAQSection from '@/components/faq/FAQSection'
-import faqsApi from '@/services/faqs/faqs.service'
+import FAQSection from '@/components/strapi/faq/FAQSection'
+import faqsApi from '@/services/strapi/strapi.service'
+
 
 export default async function FAQPage() {
   const faqPages = await faqsApi.getFAQPages()

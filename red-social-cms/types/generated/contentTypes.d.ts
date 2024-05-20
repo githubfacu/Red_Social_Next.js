@@ -865,13 +865,15 @@ export interface ApiMerchandisingMerchandising extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    Titulo: Attribute.String;
-    Imagenes: Attribute.Media;
-    Descripcion: Attribute.Text;
-    Precio: Attribute.Decimal;
-    HayStock: Attribute.Boolean;
-    Slug: Attribute.String;
-    Stock: Attribute.Integer;
+    title: Attribute.String;
+    images: Attribute.Media;
+    description: Attribute.Text;
+    price: Attribute.Float;
+    isStock: Attribute.Boolean;
+    slug: Attribute.String;
+    stock: Attribute.Integer;
+    offer: Attribute.Boolean;
+    discountRate: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

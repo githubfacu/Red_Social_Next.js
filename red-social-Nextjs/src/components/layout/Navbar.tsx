@@ -18,7 +18,7 @@ const Navbar = ({loggedUsername}: NavbarProps) => {
   }
   
   return (
-    <header className="w-full">
+    <header className="w-full fixed z-50">
       <nav className="flex justify-between items-center w-full bg-blue-600 text-white p-2 mb-2">
         <Link href='/explore'>
           <div className="px-4 py-1">

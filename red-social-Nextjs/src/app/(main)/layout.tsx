@@ -2,9 +2,7 @@ import ExploreTrending from "@/components/explore/ExploreTrending"
 import ExploreUsers from "@/components/explore/ExploreUsers"
 import Menu from "@/components/menu/Menu"
 import exploreApi from "@/services/explore/explore.service"
-import userApi from "@/services/users/users.service"
 import { headers } from "next/headers"
-import Link from "next/link"
 import { FC, PropsWithChildren } from "react"
 
 const LINKS = [
@@ -34,18 +32,14 @@ const UsersLayout: FC<PropsWithChildren> = async ({children}) => {
         <div className="w-full col-span-6">{children}</div>
 
         <div className="w-full col-span-4">
-          <div className="mb-4">
-            <ExploreTrending hashes={hashes.content} />            
-          </div>
-          <div className="mb-4">
-            <ExploreUsers users={users.content}/>
-          </div>
-          <Link href='/faq'>
-            <div className="link-primary">
-              Preguntas frecuentes
+            <div className="mb-4">
+              <ExploreTrending hashes={hashes.content} />            
             </div>
-          </Link>
+            <div className="mb-4">
+              <ExploreUsers users={users.content}/>
+            </div>            
         </div>
+
       </div>
     </>
 

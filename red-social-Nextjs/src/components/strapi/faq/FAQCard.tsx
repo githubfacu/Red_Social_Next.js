@@ -15,8 +15,6 @@ type FAQCardProps = {
 }
 
 const FAQCard = ({label, href, body} : FAQCardProps) => {
-
-  console.log(body[0]);
   
   return (
     <Link href={href} className='col-span-3'>

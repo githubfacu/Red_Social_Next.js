@@ -1,6 +1,7 @@
 import { URLSearchParams } from "url"
 
-const API_URL = 'http://127.0.0.1:1337/api'
+const API_URL = process.env.STRAPI_API_URL
+const URL = process.env.STRAPI_URL
 
 export const strapiGet = async <T>(endpoint: string, params? : URLSearchParams): Promise<T> => {
 
@@ -17,3 +18,13 @@ export const strapiGet = async <T>(endpoint: string, params? : URLSearchParams):
     return res.json()
 
 }
+
+export const getCoverImg = (url?: string) => {
+    const cover = `${URL}${url}`
+
+    if (!url) {
+        return undefined
+    }else{
+        return cover
+    }
+  }
